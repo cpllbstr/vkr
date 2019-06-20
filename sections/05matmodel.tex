@@ -1,0 +1,51 @@
+
+%Математическая модель
+\chapter{МАТЕМАТИЧЕСКАЯ ПОСТАНОВКА ЗАДАЧИ}
+\section{Математическая модель}
+
+Система, показанная на рисунке \ref{fig:sketch} может быть описана следующей системой уравнений движения:
+\begin{align}
+	m_1 \ddot{x}_1 &= k_1 (l - x_1) - k_2 \left[ l - (x_2 - x_1) \right], \\
+	m_2 \ddot{x}_2 &= k_2 \left[ l - (x_2 - x_1) \right] - k_3 \left[ l - (x_3 - x_2) \right], \\
+	m_3 \ddot{x}_3 &= k_3 \left[ l - (x_3 - x_2) \right].
+\end{align}
+Сдвинув координаты, получим:
+\begin{align}
+	x_1 &= \tilde{x}_1 + l, \\
+	x_2 &= \tilde{x}_2 + 2l, \\
+	x_3 &= \tilde{x}_3 + 3l,
+\end{align}
+и, подставив полученные значения в уравнения движения, получим:
+\begin{align}
+	m_1 \ddot{\tilde{x}}_1 &= -k_1 \tilde{x}_1 + k_2 (\tilde{x}_2 - \tilde{x}_1), \\
+	m_2 \ddot{\tilde{x}}_2 &= -k_2 (\tilde{x}_2 - \tilde{x}_1) + k_3 (\tilde{x}_3 - \tilde{x}_2), \\
+	m_3 \ddot{\tilde{x}}_3 &= -k_3 (\tilde{x}_3 - \tilde{x}_2).
+\end{align}
+Разделив уравнения на соответствующие массы получим новые переменные: $\omega_i^2 = \frac{k_i}{m_i}$ and $\omega_{ij}^2 = \frac{k_i}{m_j}$. В итоге система уравнений имеет вид:
+\begin{align}
+	\ddot{\tilde{x}}_1 &= -\omega_1^2 \tilde{x}_1 + \omega_{21}^2 (\tilde{x}_2 - \tilde{x}_1), \\
+	\ddot{\tilde{x}}_2 &= -\omega_2^2 (\tilde{x}_2 - \tilde{x}_1) + \omega_{32}^2 (\tilde{x}_3 - \tilde{x}_2), \\
+	\ddot{\tilde{x}}_3 &= -\omega_3^2 (\tilde{x}_3 - \tilde{x}_2).
+\end{align}
+Для составления системы ОДУ введем вектор $q$:
+\begin{equation}\label{eq:vector}
+	\bm{q} = [q_1, q_2, q_3, q_4, q_5, q_6]^T = [\tilde{x}_1, \tilde{x}_2, \tilde{x}_3, \dot{\tilde{x}}_4, \dot{\tilde{x}}_5, \dot{\tilde{x}}_6]^T.
+\end{equation}
+Таким образом система ОДУ $\frac{d}{dt}q$ имеет вид:
+\begin{equation}
+	\frac{d}{dt}
+	\begin{bmatrix} q_1 \\ q_2 \\ q_3 \\ q_4 \\ q_5 \\ q_6 \end{bmatrix}
+	=
+	\begin{bmatrix}
+		0 & 0 & 0 & 1 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 1 & 0 \\
+		0 & 0 & 0 & 0 & 0 & 1 \\
+		-\omega_1^2 - \omega_{21}^2 & \omega_{21}^2 & 0 & 0 & 0 & 0 \\
+		\omega_2^2 & -\omega_{2}^2 - \omega_{32}^2 & \omega_{32}^2 & 0 & 0 & 0 \\
+		0 & \omega_{3}^2 & -\omega_{3}^2 & 0 & 0 & 0 \\
+	\end{bmatrix}
+	\begin{bmatrix} q_1 \\ q_2 \\ q_3 \\ q_4 \\ q_5 \\ q_6 \end{bmatrix}
+	\label{eq:syst}
+\end{equation}
+
+Таким образом нахождение значений вектора $q$, путем решения ОДУ, позволяет найти значения скоростей и координат масс $m_1$, $m_2$, $m_3$ в любой момент времени и понять какие процессы протекают в системе во время взаимодействия.  

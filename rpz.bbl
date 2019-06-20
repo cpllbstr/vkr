@@ -1,0 +1,100 @@
+\begin{thebibliography}{10}
+\def\selectlanguageifdefined#1{
+\expandafter\ifx\csname date#1\endcsname\relax
+\else\selectlanguage{#1}\fi}
+\providecommand*{\href}[2]{{\small #2}}
+\providecommand*{\url}[1]{{\small #1}}
+\providecommand*{\BibUrl}[1]{\url{#1}}
+\providecommand{\BibAnnote}[1]{}
+\providecommand*{\BibEmph}[1]{#1}
+\ProvideTextCommandDefault{\cyrdash}{\iflanguage{russian}{\hbox
+  to.8em{--\hss--}}{\textemdash}}
+\providecommand*{\BibDash}{\ifdim\lastskip>0pt\unskip\nobreak\hskip.2em plus
+  0.1em\fi
+\cyrdash\hskip.2em plus 0.1em\ignorespaces}
+\renewcommand{\newblock}{\ignorespaces}
+
+\bibitem{InfluenceOfNodes}
+\selectlanguageifdefined{english}
+\BibEmph{Lawyer~G.} Understanding the influence of all nodes in a network~//
+  \href{http://dx.doi.org/10.1038/srep08665}{\BibEmph{Scientific reports}}.
+  \BibDash
+\newblock 2015. \BibDash 03. \BibDash
+\newblock Vol.~5. \BibDash
+\newblock P.~8665.
+
+\bibitem{work1}
+\selectlanguageifdefined{english}
+\BibEmph{Darabi~B.} Viscoelastic behaviour of element of particle damper:
+  Experimental and numerical study~//
+  \href{http://dx.doi.org/10.1007/s40997-018-0277-3}{\BibEmph{Iranian Journal
+  of Science and Technology, Transactions of Mechanical Engineering}}. \BibDash
+\newblock 2019. \BibDash 01. \BibDash
+\newblock P.~1--11.
+
+\bibitem{work2}
+\selectlanguageifdefined{english}
+\BibEmph{Emri~I., Prodan~T.} A measuring system for bulk and shear
+  characterization of polymers~//
+  \href{http://dx.doi.org/10.1007/s11340-006-8528-4}{\BibEmph{Experimental
+  Mechanics}}. \BibDash
+\newblock 2006. \BibDash 08. \BibDash
+\newblock Vol.~46. \BibDash
+\newblock P.~429--439.
+
+\bibitem{work7}
+\selectlanguageifdefined{english}
+Viscoelasticity of new generation thermoplastic polyurethane vibration
+  isolators~/ Marko~Bek, Joris~Betjes, Bernd-Steffen~von~Bernstorff,
+  Igor~Emri~// \href{http://dx.doi.org/10.1063/1.5000413}{\BibEmph{Physics of
+  Fluids}}. \BibDash
+\newblock 2017. \BibDash
+\newblock Vol.~29, no.~12. \BibDash
+\newblock P.~121614. \BibDash
+\newblock
+  \href{https://doi.org/10.1063/1.5000413}{https://doi.org/10.1063/1.5000413}.
+
+\bibitem{work10}
+\selectlanguageifdefined{english}
+Energy dissipation in granular materials in triaxial tests~/ Rector~Mukwiri,
+  Yousef~Motlagh, William~Coombs, Charles~Augarde. \BibDash
+\newblock 2017. \BibDash 04.
+
+\bibitem{work11}
+\selectlanguageifdefined{english}
+\BibEmph{Sanchez~M., Carlevaro~M.} Nonlinear dynamic analysis of an optimal
+  particle damper~//
+  \href{http://dx.doi.org/10.1016/j.jsv.2012.09.042}{\BibEmph{Journal of Sound
+  and Vibration}}. \BibDash
+\newblock 2011. \BibDash 10. \BibDash
+\newblock Vol. 332.
+
+\bibitem{BahvalJidkovKobel1987}
+\selectlanguageifdefined{russian}
+\BibEmph{{Бахвалов Н.С., Жидков Н.П., Кобельков
+  Г.М.}} Численные методы. \BibDash
+\newblock {Москва}~: Наука, 1987. \BibDash
+\newblock {\cyr\CYRS.}~600.
+
+\bibitem{GoTour}
+\selectlanguageifdefined{english}
+{Go Tour}. \BibDash
+\newblock \url{https://tour.golang.org/welcome/1}.
+
+\bibitem{ProgrammingInGo}
+\selectlanguageifdefined{english}
+\BibEmph{{Mark Summerfield}}. Programming in Go: Creating Applications for the
+  21st Century. \BibDash
+\newblock 2012.
+
+\bibitem{GoNum}
+\selectlanguageifdefined{english}
+{GoNum}. \BibDash
+\newblock \url{https://www.gonum.org/}.
+
+\bibitem{GinGonic}
+\selectlanguageifdefined{english}
+{GoDoc} gin-gonic. \BibDash
+\newblock \url{https://godoc.org/github.com/gin-gonic/gin}.
+
+\end{thebibliography}
