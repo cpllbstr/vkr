@@ -1,0 +1,18 @@
+\begin{tikzpicture}[start chain=going below,node distance=6mm, column sep=2cm]
+    \node [cloud] (start) {Variate};
+    \node [cyclebegin, join] (cycm1) {m1 = start mass; m1<=final mass}  ;
+    \node [cyclebegin, join] (cycm2) {m2 = start mass; m2<=final mass};
+    \node [subroutine, join] (sym)  {Симуляция соударения};
+    \node [if, join] (nonph) {Достигнут нефизический случай?};
+
+    \node [block] (energ) {Вычисление запасенной энергии};
+    \node [cycleend, join] (cycm1e) {m1+=grid step}  ;
+    \node [cycleend, join] (cycm2e) {m2+=grid step};
+    \node [io,  join]  (out) {Отправление полученных\\значений по каналу};
+    \node [cloud, join] (fin) {Конец};
+    
+    \node [coord,  left of = energ, node distance = 6cm] (conn) {}; 
+    \path [line] (nonph) -| node [u,near start] {Да} (conn);
+    \path [line] (conn) |- (cycm2e);
+    \path [line] (nonph) to node [r] {Нет} (energ);
+\end{tikzpicture}

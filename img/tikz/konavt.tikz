@@ -1,0 +1,33 @@
+\begin{tikzpicture}[shorten >=1pt,node distance=5cm,on grid, auto, scale=0.2] 
+        \node[state,initial] (q_0) {
+            \begin{tabular}{c}
+                Свободное \\ движение тела
+            \end{tabular}
+        };
+        \node[state] (q_1) [right=of q_0] {
+            \begin{tabular}{c}
+                Тело \\ взаимодействует \\со стенкой
+            \end{tabular}
+        };
+        \node[state] (q_2) [below=of q_0] {
+            \begin{tabular}{c}
+                Нефизический\\ случай
+            \end{tabular}
+        };
+        \path[->, bend right = 30] (q_0) edge node [below] {$x_1 \leq l$} (q_1);
+        \path[->, bend right = 30] (q_1) edge node [above] {$x_1 > l$} (q_0);
+        \path[->, bend right = 30] (q_0) edge node [left] {
+            \begin{tabular}{c}
+                $x_2\leq x_1$, \\
+                $x_3\leq x_2$, \\
+                $x_1\leq 0$  \\
+            \end{tabular}
+        } (q_2);
+        \path[->, bend left = 30] (q_1) edge node [below right] {
+           \begin{tabular}{c}
+                $x_2\leq x_1$ \\
+                $x_3\leq x_2$ \\
+                $x_1\leq 0$  \\
+            \end{tabular}
+        } (q_2);
+    \end{tikzpicture}

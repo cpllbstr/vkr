@@ -1,0 +1,22 @@
+\begin{tikzpicture}[start chain=going below,node distance=6mm, column sep=2cm]
+    \node [cloud] (start) {Начало};
+    \node [block, join] (init1) {Определение количества\\доступных потоков};
+    \node [block, join] (init2) {Вычисление шага сетки};
+    \node [cyclebegin, join] (stepm) {Z=0.1; Z<=total};
+    \node [cyclebegin, join] (cycbeg) {Число горутин < NumCPU};
+    \node [if, join] (cond) {Посчитаны все\\плоскости?};
+    %НЕТ
+    \node [block] (init3) {Создание модели\\трех тел};
+    \node [block, join] (chck) {start mass = 1 + n*step\\final mass := 1 + float64(n)*step};
+    \node [subroutine, join] (gorout) {Variate(0, total)};
+    \node [cycleend, join] (stepme) {Z+=число запущенных горутин};
+    \node [cycleend, join] (cycend) {Конец\\цикла};
+
+    \node [subroutine, join] (bar) {Барьер};
+    \node [cloud, join] (finish) {Конец};
+    
+    \node [io, left of =cycend, node distance = 6cm] (conn) {Отправление по каналу\\пустой строки};
+    \path [line] (cond) -| node [u,near start] {Да} (conn);
+    \path [line] (conn) |- (bar);
+    \path [line] (cond) to node [r] {Нет} (init3);
+\end{tikzpicture}

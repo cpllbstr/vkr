@@ -1,0 +1,14 @@
+\begin{tikzpicture}[start chain=going below,node distance=6mm, column sep=2cm]
+    \node [cloud] (start) {Начало};
+    \node [block, join] (init1) {Задание начальных значений};
+    \node [block, join] (init2) {State := STARTED};
+
+    \node [cyclebegin, join] (cycbeg) {time = 0; time <= tfin};
+    \node [subroutine, join] (chck) {Проверка\\ состояния};
+    \node [block, join] (stat) {State = Current State};
+    \node [block, join] (step) {Вычисление значений\\ скоростей и координат\\ на следующем шаге};
+    \node [io, join] (write ) {Вывод полученных\\ значений в файл};
+    \node [cycleend, join] (cycend) {time+=time step};
+    
+    \node [cloud, join] (finish) {Конец};
+\end{tikzpicture}

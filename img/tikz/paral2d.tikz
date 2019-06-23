@@ -1,0 +1,12 @@
+\begin{tikzpicture}[start chain=going below,node distance=6mm, column sep=2cm]
+    \node [cloud] (start) {Начало};
+    \node [block, join] (init1) {Определение количества\\доступных потоков};
+    \node [block, join] (init2) {Вычисление шага сетки};
+    \node [block, join] (init3) {Создание модели\\трех тел};
+    \node [cyclebegin, join] (cycbeg) {Число горутин < NumCPU};
+    \node [block, join] (chck) {start mass = 1 + n*step\\final mass := 1 + float64(n)*step};
+    \node [subroutine, join] (gorout) {Variate(start mass, final mass)};
+    \node [cycleend, join] (cycend) {Конец\\цикла};
+    \node [subroutine, join] (bar) {Барьер};
+    \node [cloud, join] (finish) {Конец};
+\end{tikzpicture}

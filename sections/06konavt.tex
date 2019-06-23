@@ -11,85 +11,21 @@
 При наличии взаимодействия со стенкой в уравнении появляется пара сил: сила упругости первой пружины $F$ и, согласно третьему закону Ньютона действует обратная сила со стороны стенки.Ппри отсутствии взаимодействия, очевидно, данная пара сил не существует, поэтому в состоянии оторванном от стенки считается, что первая пружина отсутствует. Взаимодействие со стенкой происходит, когда значение координаты массы $m_1$ меньше или равняется длине пружины  $l$ в ненапряженном состоянии.
 
  Нефизическим случаем является такое состояние системы, при котором значение координаты массы $m_{i+1}$ становятся меньше значения координаты массы $m_i$,изначально находящейся ближе к стенке. Также нефизическим случаем является, когда значение координаты какой-либо массы становиться меньше 0 (масса "прошла" сквозь стенку). Граф, описывающий конечный автомат, представлен на рисунке 
- \ref{fig:avtomat}. Программная реализация автомата представлена на блок-схеме \ref{alg:konavt}.
+ \ref{fig:avtomat}. Программная реализация автомата представлена на блок-схеме \ref{fig:konavtbs}.
 
 
+\newpage
+\begin{figure}
+    \centering
+    \scalebox{0.5}{\input{img/tikz/stmach.tikz}}
+    \caption{Блок-схема, описывающая программную реализацию конечного автомата}
+    \label{fig:konavtbs}
+\end{figure}
 
-\begin{lstlisting}[numbers=none,label=lst:konavt,language=Golang, caption=Программная реализация конечного автомата]
-	//UpdateState - checks the conditions of state machine
-func (st *StateMachine) UpdateState() error {
-	cond := ConditionFromVec(*st.CurCond)
-	if cond.X[0] <= -st.Length || cond.X[1] <= -2*st.Length || cond.X[2] <= -3*st.Length || cond.X[1] <= cond.X[0]-st.Length || cond.X[2] <= cond.X[1]-st.Length {
-		st.CurState = NonPhis
-	}
-	switch st.CurState {
-	case Started:
-		if !st.Mute {
-			fmt.Printf("HitWall: %v sec\n", st.CurTime)
-		}
-		st.CurState = HitWall
-	case HitWall:
-		if cond.X[0] > 0 {
-			if !st.Mute {
-				fmt.Printf("BouncedBack: %v sec\n", st.CurTime)
-			}
-			st.CurState = BouncedBack
-		}
-	case BouncedBack:
-		if cond.X[0] <= 0. {
-			if !st.Mute {
-				fmt.Printf("HitWall: %v sec\n", st.CurTime)
-			}
-			st.CurState = HitWall
-		}
-	case NonPhis:
-		return errors.New("NonPhis conditions reached")
-	}
-	if st.CurTime >= st.FinTime {
-		return errors.New("Final time reached, simulation stopped")
-	}
-	return nil
-}
-\end{lstlisting}
+\begin{figure}
+    \centering
+    \scalebox{0.6}{\input{img/tikz/konavt.tikz}}
+    \caption{Конечный автомат, описывающий динамическое состояние системы трех масс, взаимодействующих со стенкой}
+    \label{fig:avtomat}
+\end{figure}
 
-%\begin{figure}[b!]
-%    \centering
-%    \resizebox{\textwidth}{0.4\textwidth}{%
-%    \begin{tikzpicture}[shorten >=1pt,node distance=5cm,on grid, auto, scale=0.2] 
-%        \node[state,initial] (q_0) {
-%            \begin{tabular}{c}
-%                Свободное \\ движение тела
-%            \end{tabular}
-%        };
-%        \node[state] (q_1) [right=of q_0] {
-%            \begin{tabular}{c}
-%                Тело \\ взаимодействует \\со стенкой
-%            \end{tabular}
-%        };
-%        \node[state] (q_2) [below=of q_0] {
-%            \begin{tabular}{c}
-%                Нефизический\\ случай
-%            \end{tabular}
-%        };
-%        \path[->, bend right = 30] (q_0) edge node [below] {$x_1 \leq l$} (q_1);
-%        \path[->, bend right = 30] (q_1) edge node [above] {$x_1 > l$} (q_0);
-%        \path[->, bend right = 30] (q_0) edge node [left] {
-%            \begin{tabular}{c}
-%                $x_2\leq x_1$, \\
-%                $x_3\leq x_2$, \\
-%                $x_1\leq 0$  \\
-%            \end{tabular}
-%        } (q_2);
-%        \path[->, bend left = 30] (q_1) edge node [below right] {
-%           \begin{tabular}{c}
-%                $x_2\leq x_1$ \\
-%                $x_3\leq x_2$ \\
-%                $x_1\leq 0$  \\
-%            \end{tabular}
-%        } (q_2);
-%    \end{tikzpicture}
-%    }
-%    \caption{Конечный автомат, описывающий динамическое состояние системы трех масс, взаимодействующих со стенкой.}
-%    \label{fig:avtomat}
-%\end{figure}
-%

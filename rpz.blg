@@ -14,6 +14,7 @@ A level-1 auxiliary file: sections/netpart.aux
 A level-1 auxiliary file: sections/09exper.aux
 A level-1 auxiliary file: sections/10zakl.aux
 The style file: gost2008.bst
+A level-1 auxiliary file: sections/append.aux
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: bib/grnbib.bib
@@ -24,7 +25,7 @@ Warning--empty year in GoNum
 Warning--empty year in GinGonic
 You've used 11 entries,
             4660 wiz_defined-function locations,
-            1424 strings with 13766 characters,
+            1425 strings with 13785 characters,
 and the built_in function-call counts, 3385 in all, are:
 = -- 374
 > -- 75

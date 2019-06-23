@@ -22,59 +22,77 @@
 \end{enumerate}
 
 Данные страницы реализованы на языке html и формируют GET или POST запросы на сервер. Страницы 2,3,4 -  содержат в себе поля для ввода параметров симуляции 
-и интегрирования, которые формируют POST запрос и на сервере, который представляет собой кластер, обрабатываются и запускают симуляцию.  В листинге \ref{lst:post}
-реализован парсинг формы запроса, получение даннных, требующихся для запуска симуляции и непосредственно запуск симуляции. 
+и интегрирования, которые формируют POST запрос и на сервере, который представляет собой кластер, обрабатываются и запускают симуляцию. 
+реализован парсинг формы запроса, получение даннных, требующихся для запуска симуляции и непосредственно запуск симуляции. На рисунке \ref{fig:html} 
+продемонстрирован внешний вид страниц, формирующих POST запрос, в дальнейшем обрабатываемый сервером.
 
 
-\begin{lstlisting}[numbers=none, language=Golang,caption=Реализация обработчика POST запроса, label=lst:post]
-    r.POST("/sim", func(c *gin.Context) {
-		var m [3]float64
-		m[0], _ = strconv.ParseFloat(c.PostForm("m1"), 64)
-		m[1], _ = strconv.ParseFloat(c.PostForm("m2"), 64)
-		m[2], _ = strconv.ParseFloat(c.PostForm("m3"), 64)
+%\begin{lstlisting}[numbers=none, language=Golang,caption=Реализация обработчика POST запроса, label=lst:post]
+%    r.POST("/sim", func(c *gin.Context) {
+%		var m [3]float64
+%		m[0], _ = strconv.ParseFloat(c.PostForm("m1"), 64)
+%		m[1], _ = strconv.ParseFloat(c.PostForm("m2"), 64)
+%		m[2], _ = strconv.ParseFloat(c.PostForm("m3"), 64)
+%
+%		var k [3]float64
+%		k[0], _ = strconv.ParseFloat(c.PostForm("k1"), 64)
+%		k[1], _ = strconv.ParseFloat(c.PostForm("k2"), 64)
+%		k[2], _ = strconv.ParseFloat(c.PostForm("k3"), 64)
+%
+%		v, _ := strconv.ParseFloat(c.PostForm("vel"), 64)
+%		l, _ := strconv.ParseFloat(c.PostForm("len"), 64)
+%
+%		step, _ := strconv.ParseFloat(c.PostForm("stpt"), 64)
+%		fint, _ := strconv.ParseFloat(c.PostForm("fint"), 64)
+%
+%		c.Redirect(301, "/dat")
+%		avg := c.Request.FormValue("avg")
+%
+%		body := slv.NewThreeBodyModel(m, k)
+%		//y, mon, d := time.Now().Date()
+%		filename := fmt.Sprintf("sym%v.dat", time.Now().Format("15:04:05_02Jan06"))
+%		file, err := os.Create(fmt.Sprint("./dat/", filename))
+%		if err != nil {
+%			log.Println("Cannot create file!  :", err)
+%			c.File("./www/error.html")
+%			return
+%		}
+%
+%		machine := slv.StateMachFromModel(body, v, l, step, 0, fint)
+%		if avg == "on" {
+%			go func(machine grn.StateMachine, body grn.ThreeBodyModel, file *os.File, filename string) {
+%				filsys[filename] = false
+%				slv.SimulateAv(machine, body, file)
+%				filsys[filename] = true
+%			}(machine, body, file, filename)
+%
+%		} else {
+%			go func(machine grn.StateMachine, file *os.File, filename string) {
+%				filsys[filename] = false
+%				time.Sleep(30 * time.Second)
+%				slv.Simulate(machine, file)
+%				filsys[filename] = true
+%			}(machine, file, filename)
+%		}
+%	})
+%\end{lstlisting}
 
-		var k [3]float64
-		k[0], _ = strconv.ParseFloat(c.PostForm("k1"), 64)
-		k[1], _ = strconv.ParseFloat(c.PostForm("k2"), 64)
-		k[2], _ = strconv.ParseFloat(c.PostForm("k3"), 64)
-
-		v, _ := strconv.ParseFloat(c.PostForm("vel"), 64)
-		l, _ := strconv.ParseFloat(c.PostForm("len"), 64)
-
-		step, _ := strconv.ParseFloat(c.PostForm("stpt"), 64)
-		fint, _ := strconv.ParseFloat(c.PostForm("fint"), 64)
-
-		c.Redirect(301, "/dat")
-		avg := c.Request.FormValue("avg")
-
-		body := slv.NewThreeBodyModel(m, k)
-		//y, mon, d := time.Now().Date()
-		filename := fmt.Sprintf("sym%v.dat", time.Now().Format("15:04:05_02Jan06"))
-		file, err := os.Create(fmt.Sprint("./dat/", filename))
-		if err != nil {
-			log.Println("Cannot create file!  :", err)
-			c.File("./www/error.html")
-			return
-		}
-
-		machine := slv.StateMachFromModel(body, v, l, step, 0, fint)
-		if avg == "on" {
-			go func(machine grn.StateMachine, body grn.ThreeBodyModel, file *os.File, filename string) {
-				filsys[filename] = false
-				slv.SimulateAv(machine, body, file)
-				filsys[filename] = true
-			}(machine, body, file, filename)
-
-		} else {
-			go func(machine grn.StateMachine, file *os.File, filename string) {
-				filsys[filename] = false
-				time.Sleep(30 * time.Second)
-				slv.Simulate(machine, file)
-				filsys[filename] = true
-			}(machine, file, filename)
-		}
-	})
-\end{lstlisting}
+\begin{figure}
+	\centering
+	\begin{minipage}[h]{0.6\linewidth}
+		\includegraphics[width=\textwidth]{net/scren1.png}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[h]{0.6\linewidth}
+		\includegraphics[width=\textwidth]{net/scren2.png}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[h]{0.6\linewidth}
+		\includegraphics[width=\textwidth]{net/scren3.png}
+	\end{minipage}
+	\caption{HTML страницы, реализующие интерфейс взаимодействия с кластером}
+	\label{fig:html}
+\end{figure}
 
 Симуляция запускается отдельной горутиной, что позволяет работать серверу и расчетному ПО параллельно и не останавливать работу сервера. Также для реализации 
 отслеживания процесса расчетов был реализован ассоциативный массив \textit{filsys}, который содержит текущее состояние для каждого файла симуляции, где имя файла является ключом, 
@@ -115,7 +133,15 @@
 Шаблон в листинге \ref{lst:templ}, формирует страницу в зависимости от значений \textit{filesys}, \textit{range  \$key, \$value := . } - цикл, 
 который перебирает все ключи и значения, переданные программой, формирующей страницу(листинг \ref{lst:frm}). В зависимости от значений \textit{\$value}, формируется либо сообщение
 о том что файл еще рассчитывается, либо форма POST запроса со скрытым полем, содержащим имя файла. При нажатии на кнопку выбранный файл расчетов скачивается
-с кластера на клиентскую машину.
+с кластера на клиентскую машину. Данная страница, формируемая сервером, представлена на рисунке \ref{fig:din}.
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.5\textwidth]{net/screen4.png}
+	\caption{Страница, сформированная на основе шаблона}
+	\label{fig:din}
+\end{figure}
 
 \begin{lstlisting}[numbers=none, language=html,caption=Формирование html, label=lst:frm]
 r.GET("/dat", func(c *gin.Context) {
@@ -130,25 +156,3 @@ r.GET("/dat", func(c *gin.Context) {
 		}
     })
 \end{lstlisting}
-
-\newpage
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.7\textwidth]{net/scren1.png}
-    \caption{Зависимость $\Delta \tilde{E}$ от различных значений масс. Каждый график соответствует одной переменной массе.}
-\end{figure}
-
-\newpage
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.7\textwidth]{net/scren2.png}
-    \caption{Зависимость $\Delta \tilde{E}$ от различных значений масс. Каждый график соответствует одной переменной массе.}
-\end{figure}
-
-\newpage
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.7\textwidth]{net/scren3.png}	
-    \caption{Зависимость $\Delta \tilde{E}$ от различных значений масс. Каждый график соответствует одной переменной массе.}
-\end{figure}

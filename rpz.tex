@@ -4,24 +4,26 @@
 \documentclass[utf8x, bold]{G7-32} % Стиль (по умолчанию будет 14pt)
 \usepackage[T2A]{fontenc}
 \usepackage[russian]{babel}
+\usepackage[final]{pdfpages}
+
 % Остальные стандартные настройки убраны в preamble.inc.tex.
 \input{preamble.inc}
 
 % Настройки листингов.
 \include{listings.inc}
+\input{sections/tikzgost.tex}
 
 % Полезные макросы листингов.
 \include{macros.inc}
-%\usepackage{fancybox,fancyhdr}
-%\fancyfoot[C]{\thepage }
+
+\setcounter{page}{2}
 % Стиль титульного листа и заголовки
 %\includeonly{sections/02annotac,sections/01intro,sections/04postzadach,sections/05matmodel,sections/07analit}
 \begin{document}
 
 \frontmatter % выключает нумерацию ВСЕГО; здесь начинаются ненумерованные главы: реферат, введение, глоссарий, сокращения и прочее.
 
-%\maketitle %создает титульную страницу
-
+%\maketitle %создает титульную страниц
 
 %\begin{executors}
 %\personalSignature{Первый исполнитель}{ФИО}
@@ -41,7 +43,6 @@
 
 %\nobreakingbeforechapters
 % \breakingbeforechapters
-
 \include{sections/02annotac}
 
 \tableofcontents
@@ -79,8 +80,7 @@
 
 
 \appendix   % Тут идут приложения
-
-
+\include{sections/append}
 
 \end{document}
 
